@@ -148,16 +148,24 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-        List<String> mWeatherDataList1 = Arrays.asList(mWeatherData);
-        Collections.swap(mWeatherDataList1, fromPosition, toPosition);
+        List<String> mWeatherDataList = Arrays.asList(mWeatherData);
+        Collections.swap(mWeatherDataList, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
         return true;
     }
 
     @Override
     public void onItemDismiss(int position) {
-        List<String> mWeatherDataList2 = Arrays.asList(mWeatherData);
-        mWeatherDataList2.remove(position);
+        //        List<String> mWeatherDataList = Arrays.asList(mWeatherData); //Throw an UnsupportedOperationException
+
+        /*
+        Arrays.asList not supports add() and remove() method.
+        When Arrays.asList is called, it returns a java.util.Arrays$ArrayList, which is an immutable list,
+        but not return a java.util.ArrayList.
+         */
+        
+        List<String> mWeatherDataList = new ArrayList(Arrays.asList(mWeatherData));
+        mWeatherDataList.remove(position);
         notifyItemRemoved(position);
     }
 }
